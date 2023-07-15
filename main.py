@@ -9,29 +9,28 @@ st.title('Stock History App')
 st.sidebar.title('Selecione o stock')
 ticker_symbol = st.sidebar.text_input('stock', 'AAPL', max_chars=10)
 
-# Baixando os dados do yahoo finanças
+# Baixando os dados do Yahoo Finanças
 data = yf.download(ticker_symbol, start='2020-01-01', end='2023-06-26')
 
 # Exibir os dados
 st.subheader('Histórico')
 st.dataframe(data)
 
-# Exibir o gráfico
-fig = go.Figure()
-fig.add_trace(go.Scatter(x=data.index, y=data['Close'], name='Fechamento'))
-fig.update_layout(title=f"{ticker_symbol}", xaxis_title="Data", yaxis_title="Preço")
-st.plotly_chart(fig)
+# Exibir o gráfico do símbolo fornecido pelo usuário
+fig1 = go.Figure()
+fig1.add_trace(go.Scatter(x=data.index, y=data['Close'], name='Fechamento'))
+fig1.update_layout(title=f"{ticker_symbol}", xaxis_title="Data", yaxis_title="Preço")
+st.plotly_chart(fig1)
 
-# Baixando os dados das ações das Lojas Americanas
-ticker_symbol_lojas_americas = "LAME4.SA"
-data_lojas_americas = yf.download(ticker_symbol_lojas_americas, start='2020-01-01', end='2023-06-26')
+# Baixando os dados das Lojas Americanas
+lojas_americas_data = yf.download("LAME4.SA", start='2020-01-01', end='2023-06-26')
 
 # Exibir os dados das Lojas Americanas
-st.subheader('Histórico - Lojas Americanas')
-st.dataframe(data_lojas_americas)
+st.subheader('Histórico das Lojas Americanas')
+st.dataframe(lojas_americas_data)
 
 # Exibir o gráfico das Lojas Americanas
-fig_lojas_americas = go.Figure()
-fig_lojas_americas.add_trace(go.Scatter(x=data_lojas_americas.index, y=data_lojas_americas['Close'], name='Fechamento'))
-fig_lojas_americas.update_layout(title=f"{ticker_symbol_lojas_americas}", xaxis_title="Data", yaxis_title="Preço")
-st.plotly_chart(fig_lojas_americas)
+fig2 = go.Figure()
+fig2.add_trace(go.Scatter(x=lojas_americas_data.index, y=lojas_americas_data['Close'], name='Fechamento'))
+fig2.update_layout(title="Lojas Americanas", xaxis_title="Data", yaxis_title="Preço")
+st.plotly_chart(fig2)
